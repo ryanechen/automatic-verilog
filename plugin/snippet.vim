@@ -189,7 +189,7 @@ function s:AutoTemplate() "{{{2
     call append(lnum+7, ");")
     call append(lnum+8, "")
     call append(lnum+9, "endmodule")
-    call cursor(cursor_lnum,6)
+    call cursor(lnum+6,13)
 endfunction "}}}2
 "}}}1
 
