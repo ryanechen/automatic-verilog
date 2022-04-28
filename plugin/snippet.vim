@@ -25,12 +25,12 @@ endfunction
 
 "Defaults 默认设置{{{1
 let g:_ATV_SNIPPET_DEFAULTS = {
-            \'author':      'HonkW',
-            \'company':     'NB Co.,Ltd.',
-            \'project':     'IC_Design',
+            \'author':      'ryanechen',
+            \'company':     'IMP Co.,Ltd.',
+            \'project':     'HDL_Design',
             \'device':      'Xilinx',
-            \'email':       'contact@honk.wang',
-            \'website':     'honk.wang',
+            \'email':       'chenyanwei@impcas.ac.cn',
+            \'website':     'www.baidu.com',
             \'st_pos':      4,
             \'clk':         'clk',        
             \'rst':         'rst',
