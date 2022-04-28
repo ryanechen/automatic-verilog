@@ -185,7 +185,7 @@ function s:AutoTemplate() "{{{2
     call append(lnum+3, "(")
     call append(lnum+4, "    input                clk,")
     call append(lnum+5, "    input                rst_n,")
-    call append(lnum+6, "")
+    call append(lnum+6, "    ")
     call append(lnum+7, ");")
     call append(lnum+8, "")
     call append(lnum+9, "endmodule")
