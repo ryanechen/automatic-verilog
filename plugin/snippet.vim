@@ -2,7 +2,7 @@
 " Vim Plugin for Verilog Code Automactic Generation 
 " Author:         HonkW
 " Website:        https://honk.wang
-" Last Modified:  2022/01/27 23:13
+" Last Modified:  2022/04/15 08:36
 " File:           snippet.vim
 " Note:           Snippet function partly from zhangguo's vimscript,partly from load_template
 "------------------------------------------------------------------------------
@@ -47,8 +47,8 @@ let s:prefix = repeat(' ',g:atv_snippet_st_pos)
 "}}}1
 
 "Menu&Mapping 菜单栏和快捷键{{{1
-amenu &Verilog.Code.Always@.always\ @(posedge\ or\ posedge)<TAB><<Leader>al>    :call <SID>AlBpp()<CR>
-amenu &Verilog.Code.Always@.always\ @(posedge\ or\ negedge)                     :call <SID>AlBpn()<CR>
+amenu &Verilog.Code.Always@.always\ @(posedge\ or\ posedge)<TAB><<Leader>alpp>    :call <SID>AlBpp()<CR>
+amenu &Verilog.Code.Always@.always\ @(posedge\ or\ negedge)<TAB><<Leader>alpn>    :call <SID>AlBpn()<CR>
 amenu &Verilog.Code.Always@.always\ @(*)                                        :call <SID>AlB()<CR>
 amenu &Verilog.Code.Always@.always\ @(negedge\ or\ negedge)                     :call <SID>AlBnn()<CR>
 amenu &Verilog.Code.Always@.always\ @(posedge)                                  :call <SID>AlBp()<CR>
@@ -57,12 +57,19 @@ amenu &Verilog.Code.Header.AddHeader<TAB><<Leader>hd>                           
 amenu &Verilog.Code.Comment.SingleLineComment<TAB><<Leader>//>                  :call <SID>AutoComment()<CR>
 amenu &Verilog.Code.Comment.MultiLineComment<TAB>Visual-Mode\ <<Leader>/*>      <Esc>:call <SID>AutoComment2()<CR>
 amenu &Verilog.Code.Comment.CurLineAddComment<TAB><Leader>/$>                   :call <SID>AddCurLineComment()<CR>
-amenu &Verilog.Code.Template.LoadTemplate<TAB>                                  :AtvLoadTemplate<CR>
+"amenu &Verilog.Code.Template.LoadTemplate<TAB>                                  :AtvLoadTemplate<CR>
+amenu &Verilog.Code.Template.CreateTemplate<TAB><<Leader>mo>                           :call <SID>AutoTemplate()<CR>
 if !hasmapto('<Leader>hd')
     nnoremap <Leader>hd                                                 :call <SID>AddHeader()<CR>
 endif
-if !hasmapto('<Leader>al')
-    nnoremap <Leader>al                                                 :call <SID>AlBpp()<CR>
+if !hasmapto('<Leader>mo')
+    nnoremap <Leader>mo                                                 :call <SID>AutoTemplate()<CR>
+endif
+if !hasmapto('<Leader>alpp')
+    nnoremap <Leader>alpp                                                 :call <SID>AlBpp()<CR>
+endif
+if !hasmapto('<Leader>alpn')
+    nnoremap <Leader>alpn                                                 :call <SID>AlBpn()<CR>
 endif
 if !hasmapto('<Leader>//','n')
     nnoremap <Leader>//                                                 :call <SID>AutoComment()<CR>
@@ -176,16 +183,30 @@ function s:AutoTemplate() "{{{2
     call append(lnum+1, "")
     call append(lnum+2, "module " . modulename  )
     call append(lnum+3, "(")
-    call append(lnum+4, "clk")
-    call append(lnum+5, "rst")
-    call append(lnum+6, ");")
-    call append(lnum+7, "")
-    call append(lnum+8, "endmodule")
+    call append(lnum+4, "input                clk,")
+    call append(lnum+5, "input                rst,")
+    call append(lnum+6, "")
+    call append(lnum+7, ");")
+    call append(lnum+8, "")
+    call append(lnum+9, "endmodule")
 endfunction "}}}2
 "}}}1
 
 "Always Block
 
+function s:mod() "{{{1
+    let lnum = line(".")
+    call append(lnum-1,s:prefix."always@(posedge ".g:atv_snippet_clk." or posedge ".g:atv_snippet_rst.")")
+    call append(lnum+0,s:prefix."begin")
+    call append(lnum+1,s:prefix."    if(".g:atv_snippet_rst."==1'b1)begin")
+    call append(lnum+2,s:prefix."         ")
+    call append(lnum+3,s:prefix."    end")
+    call append(lnum+4,s:prefix."    else begin")
+    call append(lnum+5,s:prefix."         ")
+    call append(lnum+6,s:prefix."    end")
+    call append(lnum+7,s:prefix."end")
+    call cursor(lnum+3,13)
+endfunction "}}}1
 function s:AlBpp() "{{{1
     let lnum = line(".")
     call append(lnum-1,s:prefix."always@(posedge ".g:atv_snippet_clk." or posedge ".g:atv_snippet_rst.")")
