@@ -183,13 +183,13 @@ function s:AutoTemplate() "{{{2
     call append(lnum+1, "")
     call append(lnum+2, "module " . modulename  )
     call append(lnum+3, "(")
-    call append(lnum+4, "input                clk,")
-    call append(lnum+5, "input                rst,")
+    call append(lnum+4, "    input                clk,")
+    call append(lnum+5, "    input                rst,")
     call append(lnum+6, "")
     call append(lnum+7, ");")
     call append(lnum+8, "")
     call append(lnum+9, "endmodule")
-    call cursor(lnum+6,13)
+    call cursor(lnum+7,4)
 endfunction "}}}2
 "}}}1
 
